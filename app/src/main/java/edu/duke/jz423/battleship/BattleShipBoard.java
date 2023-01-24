@@ -1,7 +1,6 @@
 package edu.duke.jz423.battleship;
 
-
-public class BattleShipBoard implements Board {
+public class BattleShipBoard<T> implements Board<T> {
   private final int width;
   private final int height;
 
