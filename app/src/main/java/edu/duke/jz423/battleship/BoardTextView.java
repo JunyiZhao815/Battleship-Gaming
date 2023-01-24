@@ -14,7 +14,7 @@ public class BoardTextView {
    */
   private final Board<Character> toDisplay;
 
-  /**
+  /**x
    * Constructs a BoardView, given the board it will display.
    * 
    * @param toDisplay is the Board to display
