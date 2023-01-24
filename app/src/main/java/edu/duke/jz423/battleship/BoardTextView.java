@@ -1,5 +1,7 @@
 package edu.duke.jz423.battleship;
 
+import java.util.ArrayList;
+
 /**
  * This class handles textual display of
  * a Board (i.e., converting it to a string to show
@@ -14,7 +16,8 @@ public class BoardTextView {
    */
   private final Board<Character> toDisplay;
 
-  /**x
+  /**
+   * x
    * Constructs a BoardView, given the board it will display.
    * 
    * @param toDisplay is the Board to display
@@ -26,11 +29,15 @@ public class BoardTextView {
           "Board must be no larger than 10x26, but is " + toDisplay.getWidth() + "x" + toDisplay.getHeight());
     }
   }
+
   /**
-     This returns a string that displays the blank broad
-     @return a string that displays the blank broad, with head on the top and bottom
+   * This returns a string that displays the blank broad
+   * 
+   * @return a string that displays the blank broad, with head on the top and
+   *         bottom
    */
   public String displayMyOwnBoard() {
+
     String header = makeHeader();
     StringBuilder ans = new StringBuilder(header);
     int width = toDisplay.getWidth();
@@ -40,7 +47,13 @@ public class BoardTextView {
       String sep = "";
       for (int j = 0; j < width; j++) { // create one row
         sb.append(sep);
-        sb.append(" ");
+        Coordinate coordinate = new Coordinate(i, j);
+        Character hasShip = toDisplay.whatIsAt(coordinate);
+        if (hasShip != null) {
+          sb.append("s");
+        } else {
+          sb.append(" ");
+        }
         sep = "|";
       }
       sb.append(" " + String.valueOf((char) (i + 65) + "\n"));
