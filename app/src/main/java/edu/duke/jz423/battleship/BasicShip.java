@@ -1,16 +1,33 @@
 package edu.duke.jz423.battleship;
 
-public class BasicShip implements Ship<Character> {
-  private final Coordinate myLocation;
+import java.util.HashMap;
+/**
+   This BasicShip class is the parent class of RectangleShip, implements Ship, it has myPieces and myDisplayInfo
+ */
+public abstract class BasicShip<T> implements Ship<T> {
+  protected HashMap<Coordinate, Boolean> myPieces;
+  protected ShipDisplayInfo<T> myDisplayInfo;
 
-  public BasicShip(Coordinate myLocaction) {
-    this.myLocation = myLocaction;
+
+  /**
+     This constructor requires one iterable e.g, map, set, and also a shipDisplayInfo, fill the fields of BasicShip
+   */
+  public BasicShip(Iterable<Coordinate> where, ShipDisplayInfo<T> myDisplayInfo) {
+    this.myDisplayInfo = myDisplayInfo;
+    myPieces = new HashMap<Coordinate, Boolean>();
+    for (Coordinate c : where) {
+      this.myPieces.put(c, false);
+    }
   }
 
   @Override
   public boolean occupiesCoordinates(Coordinate where) {
-    // TODO Auto-generated method stub
-    return where.equals(myLocation);
+    if (myPieces.containsKey(where) && myPieces.get(where) != null) {
+      return true;
+    } else {
+      return false;
+    }
+
   }
 
   @Override
@@ -32,9 +49,10 @@ public class BasicShip implements Ship<Character> {
   }
 
   @Override
-  public Character getDisplayInfoAt(Coordinate where) {
-    // TODO Auto-generated method stub
-    return 's';
+  public T getDisplayInfoAt(Coordinate where) {
+    // TODO this is not right. We need to
+    // look up the hit status of this coordinate
+    return myDisplayInfo.getInfo(where, false);
   }
 
 }
