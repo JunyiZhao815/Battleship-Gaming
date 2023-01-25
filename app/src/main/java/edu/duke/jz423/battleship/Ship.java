@@ -53,4 +53,11 @@ public interface Ship<T> {
    */
   public T getDisplayInfoAt(Coordinate where);
 
+  /**
+   * Get the name of this Ship, such as "submarine".
+   * 
+   * @return the name of this ship
+   */
+  public String getName();
+
 }
