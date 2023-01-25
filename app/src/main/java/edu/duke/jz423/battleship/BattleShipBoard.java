@@ -17,16 +17,17 @@ public class BattleShipBoard<T> implements Board<T> {
    *                                  equal to zero.
    */
 
-  public BattleShipBoard(int w, int h, ArrayList<Ship<T>> myShips) {
+  public BattleShipBoard(int w, int h) {
     if (w <= 0) {
       throw new IllegalArgumentException("BattleShipBoard's width must be positive but is " + w);
     }
     if (h <= 0) {
       throw new IllegalArgumentException("BattleShipBoard's height must be positive but is " + h);
     }
-    this.myShips = myShips;
+    this.myShips = new ArrayList<Ship<T>>();
     this.width = w;
     this.height = h;
+
   }
 
   public int getHeight() {
@@ -36,20 +37,23 @@ public class BattleShipBoard<T> implements Board<T> {
   public int getWidth() {
     return width;
   }
+
   /**
    * It add ship to the myShips list, if successful, then return true
    * 
    * 
    * @param toAdd is the ship to add
-
+   * @return It return true and add the ship to the ship list
    */
   public boolean tryAddShip(Ship<T> toAdd) {
     myShips.add(toAdd);
     return true;
   }
+
   /**
    * 
-   * @param where is the parameter which is a Coordinate and represent the row and height
+   * @param where is the parameter which is a Coordinate and represent the row and
+   *              height
    * @return return the information on the position "where"
    */
   public T whatIsAt(Coordinate where) {
