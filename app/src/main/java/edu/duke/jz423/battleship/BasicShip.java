@@ -23,7 +23,7 @@ public abstract class BasicShip<T> implements Ship<T> {
   }
 
   protected void checkCoordinateInThisShip(Coordinate c) {
-    if (!(myPieces.containsKey(c) && myPieces.get(c) != null) ){
+    if (!(myPieces.containsKey(c) && myPieces.get(c) != null)) {
       throw new IllegalArgumentException("The coordinate input for the ship, row: " + c.getRow() + " ,col: "
           + c.getColumn() + " does not exists on the board!");
     }
@@ -61,6 +61,7 @@ public abstract class BasicShip<T> implements Ship<T> {
     checkCoordinateInThisShip(where);
     return myPieces.get(where);
   }
+
   /**
    * Return the view-specific information at the given coordinate. This coordinate
    * must be part of the ship.
@@ -72,12 +73,17 @@ public abstract class BasicShip<T> implements Ship<T> {
   @Override
   public T getDisplayInfoAt(Coordinate where) {
     checkCoordinateInThisShip(where);
-    if(this.wasHitAt(where)){
+    if (this.wasHitAt(where)) {
       return myDisplayInfo.getInfo(where, true);
-    }else{
+    } else {
       return myDisplayInfo.getInfo(where, false);
     }
-    
+
+  }
+
+  @Override
+  public Iterable<Coordinate> getCoordinates() {
+    return myPieces.keySet();
   }
 
 }
