@@ -20,6 +20,5 @@ public class InBoundsRuleChecker<T> extends PlacementRuleChecker<T> {
       }
     }
     return true;
-  }// 把这个给implement了，然后再进入这个的test，把这个文件的test和PlacementRuleChecker给搞到80
-
+  }
 }

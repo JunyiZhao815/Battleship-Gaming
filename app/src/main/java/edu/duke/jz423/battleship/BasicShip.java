@@ -42,6 +42,7 @@ public abstract class BasicShip<T> implements Ship<T> {
   @Override
   public boolean isSunk() {
     for (Coordinate c : myPieces.keySet()) {
+
       checkCoordinateInThisShip(c);
       if (!myPieces.get(c)) {
         return false;
