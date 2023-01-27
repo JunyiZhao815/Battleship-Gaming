@@ -28,8 +28,9 @@ public class BattleShipBoard<T> implements Board<T> {
     this.myShips = new ArrayList<Ship<T>>();
     this.width = w;
     this.height = h;
-    this.placementChecker = new InBoundsRuleChecker<T>(null); // later: new NoCollisionRuleChecker<>(new
-                                                              // InBoundsRuleChecker<T>(null))
+    this.placementChecker = new InBoundsRuleChecker<T>(new NoCollisionRuleChecker<>(null)); // later: new
+                                                                                            // NoCollisionRuleChecker<>(new
+    // InBoundsRuleChecker<T>(null))
   }
 
   public int getHeight() {
@@ -48,8 +49,12 @@ public class BattleShipBoard<T> implements Board<T> {
    * @return It return true and add the ship to the ship list
    */
   public boolean tryAddShip(Ship<T> toAdd) {
-    myShips.add(toAdd);
-    return true;
+    if (placementChecker.checkPlacement(toAdd, this)) {
+      myShips.add(toAdd);
+      return true;
+    }
+
+    return false;
   }
 
   /**

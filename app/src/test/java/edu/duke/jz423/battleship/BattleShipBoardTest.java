@@ -2,9 +2,11 @@
 package edu.duke.jz423.battleship;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -55,13 +57,19 @@ public class BattleShipBoardTest {
 
   @Test
   public void test_tryAddShip() {
-    Board<Character> b1 = new BattleShipBoard<>(10, 10);
-    Coordinate c = new Coordinate(10, 10);
-    RectangleShip<Character> s = new RectangleShip<Character>(c, 's', '*');
-    //BasicShip s = new BasicShip(c);
-    assertEquals(true, b1.tryAddShip(s));
-    assertNotEquals(false, b1.tryAddShip(s));
-
+    BattleShipBoard<Character> board = new BattleShipBoard<>(5, 5);
+    V1ShipFactory shipFactory = new V1ShipFactory();
+    Coordinate c = new Coordinate(1, 1);
+    Placement p = new Placement(c, 'V');
+    Ship<Character> ship = shipFactory.createShip(p, 1, 3, 'c', null);
+    assertTrue(board.tryAddShip(ship));
+    
+    Ship<Character> ship2 = shipFactory.createShip(new Placement(new Coordinate(2, 1),
+        'V'), 2, 2, 'c', null);
+    assertFalse(board.tryAddShip(ship2));
+        Ship<Character> ship3 = shipFactory.createShip(new Placement(new Coordinate(2, 2),
+        'V'), 2, 2, 'c', null);
+        assertTrue(board.tryAddShip(ship3));
   }
 
   @Test
