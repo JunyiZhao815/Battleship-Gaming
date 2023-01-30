@@ -61,14 +61,15 @@ public class BattleShipBoardTest {
     Coordinate c = new Coordinate(1, 1);
     Placement p = new Placement(c, 'V');
     Ship<Character> ship = shipFactory.createShip(p, 1, 3, 'c', null);
-    assertTrue(board.tryAddShip(ship));
+    assertEquals(null,board.tryAddShip(ship));
 
     Ship<Character> ship2 = shipFactory.createShip(new Placement(new Coordinate(2, 1),
         'V'), 2, 2, 'c', null);
-    assertFalse(board.tryAddShip(ship2));
+    assertEquals("That placement is invalid: the ship overlaps another ship.\n" ,board.tryAddShip(ship2));
     Ship<Character> ship3 = shipFactory.createShip(new Placement(new Coordinate(2, 2),
         'V'), 2, 2, 'c', null);
-    assertTrue(board.tryAddShip(ship3));
+    assertEquals(null,board.tryAddShip(ship3));
+    
   }
 
   @Test

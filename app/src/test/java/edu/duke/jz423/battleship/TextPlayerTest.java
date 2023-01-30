@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -26,37 +27,42 @@ public class TextPlayerTest {
     expected[0] = new Placement(new Coordinate(1, 2), 'V');
     expected[1] = new Placement(new Coordinate(2, 8), 'H');
     expected[2] = new Placement(new Coordinate(0, 4), 'V');
+    String line = "--------------------------------------------------------------------------------\n";
+
     for (int i = 0; i < expected.length; i++) {
       Placement p = player.readPlacement(prompt);
       assertEquals(p, expected[i]); // did we get the right Placement back
-      assertEquals(prompt + "\n", bytes.toString()); // should have printed protmpt and newline
+      assertEquals(line + prompt +"\n"+ line , bytes.toString()); // should have printed protmpt and newline
       bytes.reset(); // clear out bytes for next time around
     }
     String a = null;
-    assertThrows(IllegalArgumentException.class, ()->player.readPlacement(a));
-    
+    assertThrows(IllegalArgumentException.class, () -> player.readPlacement(a));
+
+    StringReader sr2 = new StringReader("");
+    TextPlayer player2 = new TextPlayer("A", b, new BufferedReader(sr2), ps, new V1ShipFactory());
+    assertThrows(EOFException.class, () -> player2.readPlacement(prompt));
+
+    StringReader sr3 = new StringReader("AAV"); // A2Q is also tested on this line
+    TextPlayer player3 = new TextPlayer("A", b, new BufferedReader(sr3), ps, new V1ShipFactory());
+    assertThrows(IllegalArgumentException.class, () -> player3.readPlacement(prompt));
   }
 
   @Test
   void test_one_placement() throws IOException {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     // App app = new App(b, sr, ps);
-    TextPlayer player = createTextPlayer(3, 3, "A0V\nA1V\na3v\n", bytes);
-    Placement[] expected = new Placement[3];
+    TextPlayer player = createTextPlayer(10, 10, "A0V\nA1V\na3v\n", bytes);
 
-    expected[0] = new Placement(new Coordinate(1, 2), 'V');
-    expected[1] = new Placement(new Coordinate(2, 8), 'H');
-    expected[2] = new Placement(new Coordinate(0, 4), 'V');
-
-    for (int i = 0; i < expected.length; i++) {
+    String line = "--------------------------------------------------------------------------------\n";
+    for (int i = 0; i < 3; i++) {
       player.doOnePlacement("Destroyer", player.shipCreationFns.get("Destroyer"));
       assertEquals(
-          "Player " + player.name + " where do you want to place a Destroyer?\n" + player.view.displayMyOwnBoard(),
+                   line + "Player " + player.name + " where do you want to place a Destroyer?\n" + line + line
+              + "Current ocean:\n"+player.view.displayMyOwnBoard() + line,
           bytes.toString());
       bytes.reset(); // clear out bytes for next time around
     }
   }
-
   /**
    * change the App declaration
    * and construction to a TextPlayer
@@ -70,33 +76,44 @@ public class TextPlayerTest {
 
   }
   /**
-  @Test
-  public void test_doPlacementPhase() throws IOException {
-    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-    TextPlayer player = createTextPlayer(3, 3, "A0V\nA1V\na2v\n", bytes);
-
-    // App app = new App(b, sr, ps);
-    String instruction = "--------------------------------------------------------------------------------\n" +
-        "Player " + player.name + ": you are going to place the following ships (which are all\n" +
-        "rectangular). For each ship, type the coordinate of the upper left\n" +
-        "side of the ship, followed by either H (for horizontal) or V (for\n" +
-        "vertical).  For example M4H would place a ship horizontally starting\n" +
-        "at M4 and going to the right.  You have\n\n" +
-        "2 \"Submarines\" ships that are 1x2 \n3 \"Destroyers\" that are 1x3\n" +
-        "3 \"Battleships\" that are 1x4\n2 \"Carriers\" that are 1x6\n" +
-        "--------------------------------------------------------------------------------\n";
-    String[] expected = new String[4];
-    expected[0] = "  0|1|2\n" + "A  | |  A\n" + "B  | |  B\n" + "C  | |  C\n" + "  0|1|2\n";
-    expected[1] = "  0|1|2\n" + "A s| |  A\n" + "B s| |  B\n" + "C s| |  C\n" + "  0|1|2\n";
-    expected[2] = "  0|1|2\n" + "A s|s|  A\n" + "B s|s|  B\n" + "C s|s|  C\n" + "  0|1|2\n";
-    expected[3] = "  0|1|2\n" + "A s|s|s A\n" + "B s|s|s B\n" + "C s|s|s C\n" + "  0|1|2\n";
-    for (int i = 0; i < expected.length - 1; i++) {
-      player.doPlacementPhase();
-      assertEquals(
-          expected[i] + instruction + "Player A where do you want to place a Destroyer?\n" + expected[i + 1] + "\n",
-          bytes.toString());
-      bytes.reset();
-    }
-  }
-  */
+   * @Test
+   *       public void test_doPlacementPhase() throws IOException {
+   *       ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+   *       TextPlayer player = createTextPlayer(3, 3, "A0V\nA1V\na2v\n", bytes);
+   * 
+   *       // App app = new App(b, sr, ps);
+   *       String instruction =
+   *       "--------------------------------------------------------------------------------\n"
+   *       +
+   *       "Player " + player.name + ": you are going to place the following ships
+   *       (which are all\n" +
+   *       "rectangular). For each ship, type the coordinate of the upper left\n"
+   *       +
+   *       "side of the ship, followed by either H (for horizontal) or V (for\n" +
+   *       "vertical). For example M4H would place a ship horizontally starting\n"
+   *       +
+   *       "at M4 and going to the right. You have\n\n" +
+   *       "2 \"Submarines\" ships that are 1x2 \n3 \"Destroyers\" that are 1x3\n"
+   *       +
+   *       "3 \"Battleships\" that are 1x4\n2 \"Carriers\" that are 1x6\n" +
+   *       "--------------------------------------------------------------------------------\n";
+   *       String[] expected = new String[4];
+   *       expected[0] = " 0|1|2\n" + "A | | A\n" + "B | | B\n" + "C | | C\n" + "
+   *       0|1|2\n";
+   *       expected[1] = " 0|1|2\n" + "A s| | A\n" + "B s| | B\n" + "C s| | C\n" +
+   *       " 0|1|2\n";
+   *       expected[2] = " 0|1|2\n" + "A s|s| A\n" + "B s|s| B\n" + "C s|s| C\n" +
+   *       " 0|1|2\n";
+   *       expected[3] = " 0|1|2\n" + "A s|s|s A\n" + "B s|s|s B\n" + "C s|s|s
+   *       C\n" + " 0|1|2\n";
+   *       for (int i = 0; i < expected.length - 1; i++) {
+   *       player.doPlacementPhase();
+   *       assertEquals(
+   *       expected[i] + instruction + "Player A where do you want to place a
+   *       Destroyer?\n" + expected[i + 1] + "\n",
+   *       bytes.toString());
+   *       bytes.reset();
+   *       }
+   *       }
+   */
 }

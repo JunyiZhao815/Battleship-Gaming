@@ -12,11 +12,13 @@ import java.io.PrintStream;
 public class App {
   TextPlayer player1;
   TextPlayer player2;
-
+  
   public App(TextPlayer p1, TextPlayer p2) {
     this.player1 = p1;
     this.player2 = p2;
   }
+
+
 
   public void doPlacementPhase() throws IOException {
     player1.doPlacementPhase();
@@ -27,7 +29,7 @@ public class App {
     // Board<Character> b = new BattleShipBoard<>(10, 20);
     // App app = new App(b, new InputStreamReader(System.in), System.out);
     // app.doOnePlacement();
-
+    
     Board<Character> b1 = new BattleShipBoard<Character>(10, 20);
     Board<Character> b2 = new BattleShipBoard<Character>(10, 20);
     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));

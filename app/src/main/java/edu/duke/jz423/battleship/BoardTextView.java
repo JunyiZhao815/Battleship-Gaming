@@ -50,7 +50,7 @@ public class BoardTextView {
         Coordinate coordinate = new Coordinate(i, j);
         Character hasShip = toDisplay.whatIsAt(coordinate);
         if (hasShip != null) {
-          sb.append("s");
+          sb.append(hasShip);
         } else {
           sb.append(" ");
         }

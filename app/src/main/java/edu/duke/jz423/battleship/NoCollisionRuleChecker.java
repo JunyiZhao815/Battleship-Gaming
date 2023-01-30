@@ -10,14 +10,16 @@ public class NoCollisionRuleChecker  <T> extends PlacementRuleChecker<T> {
   }
 
   @Override
-  protected boolean checkMyRule(Ship<T> theShip, Board<T> theBoard) {
+  protected String  checkMyRule(Ship<T> theShip, Board<T> theBoard) {
     Iterable<Coordinate> set = theShip.getCoordinates();
     for(Coordinate c: set){
       if(theBoard.whatIsAt(c) != null){
-        return false;
+        return"That placement is invalid: the ship overlaps another ship.\n";
+
+
       }
     }
-    return true;
+    return null;
   }
   
 }

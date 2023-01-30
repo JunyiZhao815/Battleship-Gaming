@@ -17,7 +17,7 @@ public class Placement {
    */
   public Placement(String str) {
     if (str.length() != 3) {
-      throw new IllegalArgumentException("Please enter the correct length of string input");
+      throw new IllegalArgumentException("That placement is invalid: it does not have the correct format.");
     }
     String coordinateLetter = str.substring(0, str.length() - 1);
     this.where = new Coordinate(coordinateLetter);
@@ -25,7 +25,7 @@ public class Placement {
     
     char orientationLetter = Character.toUpperCase(str.charAt(str.length() - 1));
     if ( !(orientationLetter == 'V' || orientationLetter == 'H')) {
-      throw new IllegalArgumentException("Please enter the correct orientation");
+      throw new IllegalArgumentException("That placement is invalid: it does not have the correct format.");
     }
     this.orientation = orientationLetter;
   }

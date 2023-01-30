@@ -42,19 +42,18 @@ public class BattleShipBoard<T> implements Board<T> {
   }
 
   /**
-   * It add ship to the myShips list, if successful, then return true
+   * It add ship to the myShips list, if successful, then return null
    * 
    * 
    * @param toAdd is the ship to add
-   * @return It return true and add the ship to the ship list
+   * @return It return null and add the ship to the ship list, else return the error
    */
-  public boolean tryAddShip(Ship<T> toAdd) {
-    if (placementChecker.checkPlacement(toAdd, this)) {
-      myShips.add(toAdd);
-      return true;
+  public String  tryAddShip(Ship<T> toAdd) {
+    String placementProblem = this.placementChecker.checkPlacement(toAdd, this);
+    if(placementProblem == null){
+      this.myShips.add(toAdd);
     }
-
-    return false;
+    return placementProblem;
   }
 
   /**

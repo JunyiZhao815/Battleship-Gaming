@@ -1,6 +1,7 @@
 package edu.duke.jz423.battleship;
 
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -40,11 +41,16 @@ public class TextPlayer {
    * @return return a Placement
    */
   public Placement readPlacement(String prompt) throws IOException {
-    if(prompt == null){
+    if (prompt == null) {
       throw new IllegalArgumentException("You are sending a null in the readPlacement process in TextPlayer");
     }
+    this.out.println("--------------------------------------------------------------------------------");
     this.out.println(prompt);
+    this.out.println("--------------------------------------------------------------------------------");
     String s = this.inputReader.readLine();
+    if (s == null) {
+      throw new EOFException("Cannot read your placement string, which shows null");
+    }
     return new Placement(s);
 
   }
@@ -56,10 +62,18 @@ public class TextPlayer {
    */
   // doOnePlacement("Submarine", (p)->shipFactory.makeSubmarine(p));
   public void doOnePlacement(String shipName, Function<Placement, Ship<Character>> createFn) throws IOException {
+    String line = "--------------------------------------------------------------------------------\n";
+
     Placement p = readPlacement("Player " + name + " where do you want to place a " + shipName + "?");
     Ship<Character> s = createFn.apply(p);
-    theBoard.tryAddShip(s);
-    out.print(view.displayMyOwnBoard());
+    String error = theBoard.tryAddShip(s);
+    if (error != null) {
+      this.out.print(error);
+      doOnePlacement(shipName, createFn);
+    } else {
+      this.out.print(line + "Current ocean:\n" + this.view.displayMyOwnBoard() + line);
+      return;
+    }
   }
 
   public void doPlacementPhase() throws IOException {
@@ -79,6 +93,10 @@ public class TextPlayer {
     }
   }
 
+  /**
+   * This function is to create a map, mapping what kind of ship that is created
+   * to a function that make that ship
+   */
   protected void setupShipCreationMap() {
     shipCreationFns.put("Submarine", (p) -> shipFactory.makeSubmarine(p));
     shipCreationFns.put("Carrier", (p) -> shipFactory.makeCarrier(p));
@@ -87,6 +105,9 @@ public class TextPlayer {
 
   }
 
+  /**
+   * This function is to create all of the ships
+   */
   protected void setupShipCreationList() {
     shipsToPlace.addAll(Collections.nCopies(2, "Submarine"));
     shipsToPlace.addAll(Collections.nCopies(3, "Destroyer"));
