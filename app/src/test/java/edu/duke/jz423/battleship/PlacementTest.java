@@ -51,7 +51,7 @@ public class PlacementTest {
     Placement d = new Placement("A0H");
     Placement e = new Placement("B0H");
     Coordinate f = new Coordinate("A2");
-    assertFalse( a.equals(f));
+    assertFalse(a.equals(f));
     assertEquals(a, b);
     assertEquals(b, c);
     assertNotEquals(a, d);

@@ -1,9 +1,0 @@
-package edu.duke.jz423.battleship;
-/**
-   This class should check the rule that theShip does not collide with anything else
-on theBoard (that all the squares it needs are empty).
-
- */
-public class NoCollisionRuleChecker  <T> extends PlacementRuleChecker<T> {
-
-}
