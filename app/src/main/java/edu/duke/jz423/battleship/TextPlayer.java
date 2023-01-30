@@ -18,7 +18,7 @@ public class TextPlayer {
       AbstractShipFactory<Character> shipFactory) {
     this.theBoard = theBoard;
     this.view = new BoardTextView(theBoard);
-    this.inputReader = new BufferedReader(inputSource);
+    this.inputReader = inputSource;
     this.out = out;
     this.shipFactory = shipFactory;
     this.name = name;
@@ -31,10 +31,10 @@ public class TextPlayer {
    * @return return a Placement
    */
   public Placement readPlacement(String prompt) throws IOException {
-    out.println(prompt);
-    String s = inputReader.readLine();
-   
-    return new Placement(s);
+    this.out.println(prompt);
+    String s = this.inputReader.readLine();
+      return new Placement(s);
+    
   }
 
   /**
@@ -52,16 +52,16 @@ public class TextPlayer {
   }
 
   public void doPlacementPhase() throws IOException {
-         this.out.print(this.view.displayMyOwnBoard());
-        String line = "--------------------------------------------------------------------------------\n";
-        this.out.print(line+
-        "Player "+this.name+": you are going to place the following ships (which are all\n"+
-        "rectangular). For each ship, type the coordinate of the upper left\n"+
-        "side of the ship, followed by either H (for horizontal) or V (for\n"+
-        "vertical).  For example M4H would place a ship horizontally starting\n"+
-        "at M4 and going to the right.  You have\n\n"+
-        "2 \"Submarines\" ships that are 1x2 \n3 \"Destroyers\" that are 1x3\n"+
-                       "3 \"Battleships\" that are 1x4\n2 \"Carriers\" that are 1x6\n"+line);
-        this.doOnePlacement();
+    this.out.print(this.view.displayMyOwnBoard());
+    String line = "--------------------------------------------------------------------------------\n";
+    this.out.print(line +
+        "Player " + this.name + ": you are going to place the following ships (which are all\n" +
+        "rectangular). For each ship, type the coordinate of the upper left\n" +
+        "side of the ship, followed by either H (for horizontal) or V (for\n" +
+        "vertical).  For example M4H would place a ship horizontally starting\n" +
+        "at M4 and going to the right.  You have\n\n" +
+        "2 \"Submarines\" ships that are 1x2 \n3 \"Destroyers\" that are 1x3\n" +
+        "3 \"Battleships\" that are 1x4\n2 \"Carriers\" that are 1x6\n" + line);
+    this.doOnePlacement();
   }
 }
