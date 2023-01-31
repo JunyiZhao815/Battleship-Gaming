@@ -8,7 +8,7 @@ public class NoCollisionRuleCheckerTest {
   @Test
   public void test_NoCollisionRule() {
     NoCollisionRuleChecker<Character> checker = new NoCollisionRuleChecker<>(null);
-    BattleShipBoard<Character> board = new BattleShipBoard<>(5, 5);
+    BattleShipBoard<Character> board = new BattleShipBoard<>(5, 5, 'X');
 
     V1ShipFactory shipFactory = new V1ShipFactory();
     Coordinate c = new Coordinate(1, 1);
@@ -27,7 +27,7 @@ public class NoCollisionRuleCheckerTest {
   public void test_twoRules() {
     // InBoundsRuleChecker inside of NoCollisionRuleChecker
     PlacementRuleChecker<Character> checker = new NoCollisionRuleChecker<>(new InBoundsRuleChecker<>(null));
-    BattleShipBoard<Character> board = new BattleShipBoard<>(5, 5);
+    BattleShipBoard<Character> board = new BattleShipBoard<>(5, 5, 'X');
     V1ShipFactory shipFactory = new V1ShipFactory();
     Coordinate c = new Coordinate(1, 1);
     Placement p1 = new Placement(c, 'V');
@@ -42,7 +42,7 @@ public class NoCollisionRuleCheckerTest {
         checker.checkPlacement(ship3, board));
     // Vice versa
     PlacementRuleChecker<Character> checker2 = new InBoundsRuleChecker<>(new NoCollisionRuleChecker<>(null));
-    BattleShipBoard<Character> board2 = new BattleShipBoard<>(5, 5);
+    BattleShipBoard<Character> board2 = new BattleShipBoard<>(5, 5, 'X');
     V1ShipFactory shipFactory2 = new V1ShipFactory();
     Coordinate c2 = new Coordinate(1, 1);
     Placement p2 = new Placement(c2, 'V');

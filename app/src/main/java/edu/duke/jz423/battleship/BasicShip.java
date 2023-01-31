@@ -9,13 +9,15 @@ import java.util.HashMap;
 public abstract class BasicShip<T> implements Ship<T> {
   protected HashMap<Coordinate, Boolean> myPieces;
   protected ShipDisplayInfo<T> myDisplayInfo;
+  protected ShipDisplayInfo<T> enemyDisplayInfo;
 
   /**
    * This constructor requires one iterable e.g, map, set, and also a
    * shipDisplayInfo, fill the fields of BasicShip
    */
-  public BasicShip(Iterable<Coordinate> where, ShipDisplayInfo<T> myDisplayInfo) {
+  public BasicShip(Iterable<Coordinate> where, ShipDisplayInfo<T> myDisplayInfo, ShipDisplayInfo<T> enemyDisplayInfo) {
     this.myDisplayInfo = myDisplayInfo;
+    this.enemyDisplayInfo = enemyDisplayInfo;
     myPieces = new HashMap<Coordinate, Boolean>();
     for (Coordinate c : where) {
       this.myPieces.put(c, false);
@@ -25,7 +27,7 @@ public abstract class BasicShip<T> implements Ship<T> {
   protected void checkCoordinateInThisShip(Coordinate c) {
     if (!(myPieces.containsKey(c) && myPieces.get(c) != null)) {
       throw new IllegalArgumentException("The coordinate input for the ship, row: " + c.getRow() + " ,col: "
-          + c.getColumn() + " does not exists on the board!");
+          + c.getColumn() + " does not exists on the Ship!");
     }
   }
 
@@ -72,12 +74,21 @@ public abstract class BasicShip<T> implements Ship<T> {
    * @return The view-specific information at that coordinate.
    */
   @Override
-  public T getDisplayInfoAt(Coordinate where) {
-    checkCoordinateInThisShip(where);
-    if (this.wasHitAt(where)) {
-      return myDisplayInfo.getInfo(where, true);
+  public T getDisplayInfoAt(Coordinate where, boolean myShip) {
+
+    if (myShip) {
+      if (this.wasHitAt(where)) {
+        return myDisplayInfo.getInfo(where, true);
+      } else {
+        return myDisplayInfo.getInfo(where, false);
+      }
     } else {
-      return myDisplayInfo.getInfo(where, false);
+      checkCoordinateInThisShip(where);
+      if (this.wasHitAt(where)) {
+        return enemyDisplayInfo.getInfo(where, true);
+      } else {
+        return enemyDisplayInfo.getInfo(where, false);
+      }
     }
 
   }

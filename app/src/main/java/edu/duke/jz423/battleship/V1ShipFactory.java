@@ -18,7 +18,7 @@ public class V1ShipFactory implements AbstractShipFactory<Character> {
       h = temp;
     }
     //}
-    RectangleShip<Character>ship = new RectangleShip<Character>(name, where.getWhere(), w, h, letter, 'h');
+    RectangleShip<Character>ship = new RectangleShip<Character>(name, where.getWhere(), w, h, letter, '*');
     return ship;
   }
 

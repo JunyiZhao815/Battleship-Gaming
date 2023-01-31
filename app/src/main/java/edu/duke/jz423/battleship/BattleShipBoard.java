@@ -1,12 +1,15 @@
 package edu.duke.jz423.battleship;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class BattleShipBoard<T> implements Board<T> {
   private final int height;
   private final int width;
   final ArrayList<Ship<T>> myShips;
   private final PlacementRuleChecker<T> placementChecker;
+  HashSet<Coordinate> enemyMisses;
+  final T missInfo;
 
   /**
    * Constructs a BattleShipBoard with the specified width
@@ -18,7 +21,7 @@ public class BattleShipBoard<T> implements Board<T> {
    *                                  equal to zero.
    */
 
-  public BattleShipBoard(int w, int h) {
+  public BattleShipBoard(int w, int h, T missInfo) {
     if (w <= 0) {
       throw new IllegalArgumentException("BattleShipBoard's width must be positive but is " + w);
     }
@@ -31,6 +34,8 @@ public class BattleShipBoard<T> implements Board<T> {
     this.placementChecker = new InBoundsRuleChecker<T>(new NoCollisionRuleChecker<>(null)); // later: new
                                                                                             // NoCollisionRuleChecker<>(new
     // InBoundsRuleChecker<T>(null))
+    this.enemyMisses = new HashSet<>();
+    this.missInfo = missInfo;
   }
 
   public int getHeight() {
@@ -46,11 +51,12 @@ public class BattleShipBoard<T> implements Board<T> {
    * 
    * 
    * @param toAdd is the ship to add
-   * @return It return null and add the ship to the ship list, else return the error
+   * @return It return null and add the ship to the ship list, else return the
+   *         error
    */
-  public String  tryAddShip(Ship<T> toAdd) {
+  public String tryAddShip(Ship<T> toAdd) {
     String placementProblem = this.placementChecker.checkPlacement(toAdd, this);
-    if(placementProblem == null){
+    if (placementProblem == null) {
       this.myShips.add(toAdd);
     }
     return placementProblem;
@@ -62,13 +68,74 @@ public class BattleShipBoard<T> implements Board<T> {
    *              height
    * @return return the information on the position "where"
    */
-  public T whatIsAt(Coordinate where) {
+  public T whatIsAtForSelf(Coordinate where) {
+    return whatIsAt(where, true);
+  }
+
+  /**
+   * 
+   * @param where is the parameter which is a Coordinate and represent the row and
+   *              height, isSelf is to tell where this function returns for self
+   * @return return the information on the position "where"
+   */
+  protected T whatIsAt(Coordinate where, boolean isSelf) {
     for (Ship<T> s : myShips) {
       if (s.occupiesCoordinates(where)) {
-        return s.getDisplayInfoAt(where);
+        // if (!isSelf && s.wasHitAt(where)) {
+        // return null;
+        // }
+        return s.getDisplayInfoAt(where, isSelf);
       }
     }
     return null;
+  }
+
+  /**
+   * This method should search for any ship that occupies coordinate c
+   * (you already have a method to check that)
+   * If one is found, that Ship is "hit" by the attack and should
+   * record it (you already have a method for that!). Then we
+   * should return this ship.
+   *
+   * @param: c: the coordinate to fire at
+   * @return: it returns the ship that hit, else record
+   *          the miss in the enemyMisses HashSet that we just made,
+   *          and return null.
+   * 
+   */
+  @Override
+  public Ship<T> fireAt(Coordinate c) {
+    for (Ship<T> ship : myShips) {
+      if (ship.isSunk()) {
+        continue;
+      }
+      if (ship.occupiesCoordinates(c)) {
+        ship.recordHitAt(c);
+
+        /**
+         * if (enemyMisses.contains(c)) {
+         * enemyMisses.remove(c);
+         * }
+         */
+        return ship;
+      }
+    }
+    enemyMisses.add(c);
+    return null;
+  }
+
+  /**
+   * 
+   * @param where is the parameter which is a Coordinate and represent the row and
+   *              height
+   * @return return the information on the position "where" for the enemy
+   */
+  @Override
+  public T whatIsAtForEnemy(Coordinate where) {
+    if (enemyMisses.contains(where)) {
+      return missInfo;
+    }
+    return whatIsAt(where, false);
   }
 
 }

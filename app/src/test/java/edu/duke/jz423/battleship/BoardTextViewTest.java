@@ -18,7 +18,7 @@ public class BoardTextViewTest {
    * @param body:           the body of board, without header
    */
   private void emptyBoardHelper(int w, int h, String expectedHeader, String body) {
-    Board<Character> b1 = new BattleShipBoard<Character>(w, h);
+    Board<Character> b1 = new BattleShipBoard<Character>(w, h, 'X');
 
     BoardTextView view = new BoardTextView(b1);
     assertEquals(expectedHeader, view.makeHeader());
@@ -28,8 +28,8 @@ public class BoardTextViewTest {
 
   @Test
   public void test_invalid_board_size() {
-    Board<Character> wideBoard = new BattleShipBoard<Character>(11, 20);
-    Board<Character> tallBoard = new BattleShipBoard<Character>(10, 27);
+    Board<Character> wideBoard = new BattleShipBoard<Character>(11, 20, 'X');
+    Board<Character> tallBoard = new BattleShipBoard<Character>(10, 27, 'X');
     // you should write two assertThrows here
     assertThrows(IllegalArgumentException.class, () -> new BoardTextView(wideBoard));
     assertThrows(IllegalArgumentException.class, () -> new BoardTextView(tallBoard));
@@ -37,7 +37,7 @@ public class BoardTextViewTest {
 
   @Test
   public void test_display_empty_2by2() {
-    Board<Character> b1 = new BattleShipBoard<Character>(2, 2);
+    Board<Character> b1 = new BattleShipBoard<Character>(2, 2, 'X');
     BoardTextView view = new BoardTextView(b1);
     String expectedHeader = "  0|1\n";
     assertEquals(expectedHeader, view.makeHeader());
@@ -50,7 +50,7 @@ public class BoardTextViewTest {
 
   @Test
   public void test_display_empty_3by2() {
-    Board<Character> b1 = new BattleShipBoard<Character>(3, 2);
+    Board<Character> b1 = new BattleShipBoard<Character>(3, 2, 'X');
     BoardTextView view = new BoardTextView(b1);
     String expectedHeader = "  0|1|2\n";
     assertEquals(expectedHeader, view.makeHeader());
@@ -78,7 +78,7 @@ public class BoardTextViewTest {
     RectangleShip<Character> bs = new RectangleShip<Character>(c, 's', '*');
 
     // BasicShip bs = new BasicShip(c);
-    Board<Character> b1 = new BattleShipBoard<Character>(3, 5);
+    Board<Character> b1 = new BattleShipBoard<Character>(3, 5, 'X');
     b1.tryAddShip(bs);
     BoardTextView view = new BoardTextView(b1);
     String expectedHeader = "  0|1|2\n";
@@ -91,4 +91,27 @@ public class BoardTextViewTest {
     assertEquals(expected, view.displayMyOwnBoard());
   }
 
+  
+  @Test
+  public void test_display_enemy_3by5_withShips(){ 
+    V1ShipFactory factory = new V1ShipFactory();
+    Ship<Character> ship1 = factory.makeBattleship(new Placement("A1V"));
+    Ship<Character> ship2 = factory.makeSubmarine(new Placement("A0V"));
+    // BasicShip bs = new BasicShip(c);
+    Board<Character> b1 = new BattleShipBoard<Character>(3, 5, 'X');
+    BoardTextView view = new BoardTextView(b1);
+    b1.tryAddShip(ship1);
+    b1.tryAddShip(ship2);
+    b1.fireAt(new Coordinate(2, 1));
+    b1.fireAt(new Coordinate(3, 0));
+    b1.fireAt(new Coordinate(1, 0));
+    String expectedHeader = "  0|1|2\n";
+    String body = "A  | |  A\n" +
+        "B s| |  B\n" +
+        "C  |b|  C\n" +
+        "D X| |  D\n" +
+        "E  | |  E\n";
+    String expected = expectedHeader + body + expectedHeader;
+    assertEquals(expected, view.displayEnemyBoard());
+  }
 }

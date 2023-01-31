@@ -8,7 +8,7 @@ public class InBoundsRuleCheckerTest {
   @Test
   public void test_checkMyRule() {
     InBoundsRuleChecker<Character> check = new InBoundsRuleChecker<>(null);
-    BattleShipBoard<Character> board = new BattleShipBoard<>(5, 5);
+    BattleShipBoard<Character> board = new BattleShipBoard<>(5, 5, 'X');
 
     V1ShipFactory shipFactory = new V1ShipFactory();
     Coordinate c = new Coordinate(1, 1);
@@ -17,7 +17,7 @@ public class InBoundsRuleCheckerTest {
     assertEquals(check.checkMyRule(ship, board), null);
     assertEquals(check.checkPlacement(ship, board), null);
 
-    BattleShipBoard<Character> board2 = new BattleShipBoard<>(5, 5);
+    BattleShipBoard<Character> board2 = new BattleShipBoard<>(5, 5, 'X');
     Coordinate c2 = new Coordinate(1, 1);
     Placement p2 = new Placement(c2, 'V');
     Ship<Character> ship2 = shipFactory.createShip(p2, 6, 3, 'c', null);

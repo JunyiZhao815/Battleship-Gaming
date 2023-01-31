@@ -13,15 +13,17 @@ public class RectangleShip<T> extends BasicShip<T>{
   /**
      There are three kinds of constructors, which represent three different kinds of initialization.
    */
-  public RectangleShip(String name, Coordinate upperLeft, int width, int height, ShipDisplayInfo<T> sdi) {
-    super(makeCoords(upperLeft, width, height), sdi);
+  public RectangleShip(String name, Coordinate upperLeft, int width, int height, ShipDisplayInfo<T> sdi,ShipDisplayInfo<T> enemyDisplayInfo) {
+    super(makeCoords(upperLeft, width, height), sdi, enemyDisplayInfo);
     this.name = name;
   }
   
-
   public RectangleShip(String name, Coordinate upperLeft, int width, int height, T data, T onHit) {
-    this(name, upperLeft, width, height, new SimpleShipDisplayInfo<T>(data, onHit));
+    this(name, upperLeft, width, height, new SimpleShipDisplayInfo<T>(data, onHit),
+        new SimpleShipDisplayInfo<T>(null, data));
   }
+
+
   public RectangleShip(Coordinate upperLeft, T data, T onHit) {
     this("testship", upperLeft, 1, 1, data, onHit);
   }
