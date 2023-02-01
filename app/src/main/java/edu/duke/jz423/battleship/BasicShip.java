@@ -33,7 +33,7 @@ public abstract class BasicShip<T> implements Ship<T> {
 
   @Override
   public boolean occupiesCoordinates(Coordinate where) {
-    if (myPieces.containsKey(where) && myPieces.get(where) != null) {
+    if (myPieces.get(where) != null) {
       return true;
     } else {
       return false;

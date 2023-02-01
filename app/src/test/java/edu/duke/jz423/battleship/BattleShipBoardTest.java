@@ -120,8 +120,8 @@ public class BattleShipBoardTest {
     assertEquals('s', board.whatIsAtForEnemy(new Coordinate(0, 0)));
     assertEquals('X', board.whatIsAtForEnemy(new Coordinate(2, 2)));
     assertEquals('s', board.whatIsAtForEnemy(new Coordinate(0, 1)));
-
-    
+    board.fireAt(new Coordinate(0, 0));
+    assertEquals('s', board.whatIsAtForEnemy(new Coordinate(0, 0)));
 
   }
 

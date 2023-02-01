@@ -78,7 +78,7 @@ public class TextPlayer {
 
   public void doPlacementPhase() throws IOException {
 
-    this.out.print(this.view.displayMyOwnBoard());
+    this.out.print("Current ocean:\n" + this.view.displayMyOwnBoard());
     String line = "--------------------------------------------------------------------------------\n";
     this.out.print(line +
         "Player " + this.name + ": you are going to place the following ships (which are all\n" +
@@ -159,12 +159,57 @@ public class TextPlayer {
     String line = "--------------------------------------------------------------------------------\n";
     return line + "Player " + this.name + "'s turn:\n" + header + body + line;
   }
+
   /**
-     This function is to check if all the ships are sunk
-     @return: if all ships are sunk: return true; else return false;
+   * This function is to check if all the ships are sunk
+   * 
+   * @return: if all ships are sunk: return true; else return false;
    */
-  public boolean isLose(){
+  public boolean isLose() {
     return this.theBoard.isAllSunk();
+  }
+
+  /**
+   * It is a function that reads coordinate from the input String on system.
+   * 
+   * @param prompt: Words that asks user to input string.
+   * @return return a coordinate
+   */
+  public Coordinate readCoordinate(String prompt) throws IOException {
+    if (prompt == null) {
+      throw new IllegalArgumentException("You are sending a null in the readCoordinate process in TextPlayer");
+    }
+    this.out.println("--------------------------------------------------------------------------------");
+    this.out.println(prompt);
+    this.out.println("--------------------------------------------------------------------------------");
+    String s = this.inputReader.readLine();
+    if (s == null) {
+      throw new EOFException("Cannot read your placement string, which shows null");
+    }
+    return new Coordinate(s);
+
+  }
+
+  /**
+   * This function taks enemyBoard, enemyView, and the name of enemy, do a turn
+   * for self.
+   * 
+   * @param: enemyBoard: enemy's board
+   * @param: enemyView:  enemy's view
+   * @param: enemy's     name
+   */
+
+  public void playOneTurn(Board<Character> enemyBoard, BoardTextView enemyView, String name) throws IOException {
+    this.out.print(this.displayMyBoardWithEnemyNextToIt(enemyView, "Your Ocean", "Player " + name + "'s ocean"));
+    Coordinate c = readCoordinate(
+        "Where do you want to fire at? please enter a String e.g. 'A0', A is row, 0 is column\n");
+    Ship<Character> fireTheTarget = enemyBoard.fireAt(c);
+    if (fireTheTarget == null) {
+      this.out.println("You missed");
+    } else {
+      this.out.print("You hit a " + fireTheTarget.getName() + " !\n");
+    }
+
   }
 
 }

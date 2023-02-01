@@ -106,17 +106,11 @@ public class BattleShipBoard<T> implements Board<T> {
   @Override
   public Ship<T> fireAt(Coordinate c) {
     for (Ship<T> ship : myShips) {
-      if (ship.isSunk()) {
-        continue;
+      if (ship.isSunk() && ship.occupiesCoordinates(c)) {
+        return ship;
       }
       if (ship.occupiesCoordinates(c)) {
         ship.recordHitAt(c);
-
-        /**
-         * if (enemyMisses.contains(c)) {
-         * enemyMisses.remove(c);
-         * }
-         */
         return ship;
       }
     }
@@ -135,6 +129,7 @@ public class BattleShipBoard<T> implements Board<T> {
     if (enemyMisses.contains(where)) {
       return missInfo;
     }
+
     return whatIsAt(where, false);
   }
   

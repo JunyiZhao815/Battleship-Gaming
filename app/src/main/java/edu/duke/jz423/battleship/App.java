@@ -12,14 +12,33 @@ import java.io.PrintStream;
 public class App {
   TextPlayer player1;
   TextPlayer player2;
-  
+
   public App(TextPlayer p1, TextPlayer p2) {
     this.player1 = p1;
     this.player2 = p2;
   }
 
+  /**
+   * This function let two players place their ships
+   */
+  public void doAttackingPhase() throws IOException {
+    while (true) {
+      player1.playOneTurn(player2.theBoard, player2.view, player2.name);
+      if (player2.theBoard.isAllSunk()) {
+        player1.out.println("Player " + player1.name + " wins the game !");
+        break;
+      }
+      player2.playOneTurn(player1.theBoard, player1.view, player1.name);
+      if (player1.theBoard.isAllSunk()) {
+        player2.out.println("Player " + player2.name + " wins the game !");
+        break;
+      }
+    }
+  }
 
-
+  /**
+   * This function let two players place their ships
+   */
   public void doPlacementPhase() throws IOException {
     player1.doPlacementPhase();
     player2.doPlacementPhase();
@@ -29,7 +48,7 @@ public class App {
     // Board<Character> b = new BattleShipBoard<>(10, 20);
     // App app = new App(b, new InputStreamReader(System.in), System.out);
     // app.doOnePlacement();
-    
+
     Board<Character> b1 = new BattleShipBoard<Character>(10, 20, 'X');
     Board<Character> b2 = new BattleShipBoard<Character>(10, 20, 'X');
     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -40,6 +59,7 @@ public class App {
     App app = new App(p1, p2);
     // app.player1.doOnePlacement();
     app.doPlacementPhase();
+    app.doAttackingPhase();
   }
 
 }

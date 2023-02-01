@@ -39,7 +39,7 @@ public class BoardTextView {
   protected String displayAnyBoard(Function<Coordinate, Character> getSquareFn) {
 
     String header = makeHeader();
-    StringBuilder ans = new StringBuilder(header);
+    StringBuilder ans = new StringBuilder( header);
     int width = toDisplay.getWidth();
     int height = toDisplay.getHeight();
     for (int i = 0; i < height; i++) { // create many rows, or heights

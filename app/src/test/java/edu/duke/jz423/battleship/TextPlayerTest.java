@@ -50,6 +50,19 @@ public class TextPlayerTest {
   }
 
   @Test
+  void test_read_coordinate() throws IOException {
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+
+    Board<Character> b = new BattleShipBoard<Character>(10, 20, 'X');
+    PrintStream ps = new PrintStream(bytes, true);
+    String prompt = "";
+    StringReader sr2 = new StringReader("");
+    TextPlayer player2 = new TextPlayer("A", b, new BufferedReader(sr2), ps, new V1ShipFactory());
+    assertThrows(EOFException.class, () -> player2.readCoordinate(prompt));
+    assertThrows(IllegalArgumentException.class, () -> player2.readCoordinate(null));
+  }
+
+  @Test
   void test_one_placement() throws IOException {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     // App app = new App(b, sr, ps);
