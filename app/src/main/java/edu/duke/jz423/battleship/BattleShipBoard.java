@@ -137,5 +137,18 @@ public class BattleShipBoard<T> implements Board<T> {
     }
     return whatIsAt(where, false);
   }
-
+  
+  /**
+     This function checks if all ships in myShips are all sunk
+     @return: it returns true if all ships are sunk, else return false;
+   */
+  @Override
+  public boolean isAllSunk(){
+    for(Ship<T> ship: myShips){
+      if(!ship.isSunk()){
+        return false;
+      }
+    }
+    return true;
+  }
 }

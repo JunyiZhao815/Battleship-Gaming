@@ -158,7 +158,13 @@ public class TextPlayer {
     }
     String line = "--------------------------------------------------------------------------------\n";
     return line + "Player " + this.name + "'s turn:\n" + header + body + line;
-
+  }
+  /**
+     This function is to check if all the ships are sunk
+     @return: if all ships are sunk: return true; else return false;
+   */
+  public boolean isLose(){
+    return this.theBoard.isAllSunk();
   }
 
 }

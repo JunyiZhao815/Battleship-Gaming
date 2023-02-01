@@ -1,7 +1,9 @@
 package edu.duke.jz423.battleship;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -10,10 +12,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.function.Function;
-import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.api.Test;
 
 public class TextPlayerTest {
   @Test
@@ -120,46 +120,62 @@ public class TextPlayerTest {
    *       }
    *       }
    */
-    @Test
+  @Test
   public void test_displayMyBoardWithEnemyNextToIt() throws IOException {
 
-        // 1. create two board and two players
+    // 1. create two board and two players
     // 2. For each board and player, place ships
     // 3. player 1 hit play2
     // 4. display board, and check if equal to expected
     TextPlayer player = createTextPlayer(5, 3, "a0v\n", new ByteArrayOutputStream());
     player.doOnePlacement("Destroyer", player.shipCreationFns.get("Destroyer"));
-       String  ans = 
-    "--------------------------------------------------------------------------------\n"+
-    "Player A's turn:\n"+
-    "     Your ocean                 Player B's ocean\n"+
-    "  0|1|2|3|4                    0|1|2|3|4\n"+
-    "A d| | | |  A                A  | | | |  A\n"+
-    "B d| | | |  B                B s| | | |  B\n"+
-    "C d| | | |  C                C X|d| | |  C\n"+
-    "  0|1|2|3|4                    0|1|2|3|4\n"+
-    "--------------------------------------------------------------------------------\n";
-    String display = player.displayMyBoardWithEnemyNextToIt(get_Enemy_view(),"Your ocean","Player B's ocean");
-    assertEquals(display,ans);
-    
-
+    String ans = "--------------------------------------------------------------------------------\n" +
+        "Player A's turn:\n" +
+        "     Your ocean                 Player B's ocean\n" +
+        "  0|1|2|3|4                    0|1|2|3|4\n" +
+        "A d| | | |  A                A  | | | |  A\n" +
+        "B d| | | |  B                B s| | | |  B\n" +
+        "C d| | | |  C                C X|d| | |  C\n" +
+        "  0|1|2|3|4                    0|1|2|3|4\n" +
+        "--------------------------------------------------------------------------------\n";
+    TextPlayer enemy = get_Enemy();
+    String display = player.displayMyBoardWithEnemyNextToIt(enemy.view, "Your ocean", "Player B's ocean");
+    assertEquals(display, ans);
+    enemy.theBoard.fireAt(new Coordinate(0, 0));
+    enemy.theBoard.fireAt(new Coordinate(1, 1));
+    enemy.theBoard.fireAt(new Coordinate(0, 1));
+    assertTrue(enemy.isLose());
+    ans = "--------------------------------------------------------------------------------\n" +
+        "Player A's turn:\n" +
+        "     Your ocean                 Player B's ocean\n" +
+        "  0|1|2|3|4                    0|1|2|3|4\n" +
+        "A d| | | |  A                A s|d| | |  A\n" +
+        "B d| | | |  B                B s|d| | |  B\n" +
+        "C d| | | |  C                C X|d| | |  C\n" +
+        "  0|1|2|3|4                    0|1|2|3|4\n" +
+        "--------------------------------------------------------------------------------\n";
+    display = player.displayMyBoardWithEnemyNextToIt(enemy.view, "Your ocean", "Player B's ocean");
+    assertEquals(display, ans);
   }
+
   /**
-     It is a helper function to get enemy view for testing test_displayMyBoardWithEnemyNextToIt()
+   * It is a helper function to get enemy view for testing
+   * test_displayMyBoardWithEnemyNextToIt()
    */
-  public BoardTextView  get_Enemy_view(){ 
+  public TextPlayer get_Enemy() {
     V1ShipFactory factory = new V1ShipFactory();
-    Ship<Character> ship1 = factory.makeDestroyer(new Placement("A1V"));//3
-    Ship<Character> ship2 = factory.makeSubmarine(new Placement("A0V"));//2
+    Ship<Character> ship1 = factory.makeDestroyer(new Placement("A1V"));// 3
+    Ship<Character> ship2 = factory.makeSubmarine(new Placement("A0V"));// 2
     // BasicShip bs = new BasicShip(c);
     Board<Character> b1 = new BattleShipBoard<Character>(5, 3, 'X');
-    BoardTextView view = new BoardTextView(b1);
+    TextPlayer player = new TextPlayer("sam", b1, null, null, null);
     b1.tryAddShip(ship1);
     b1.tryAddShip(ship2);
     b1.fireAt(new Coordinate(2, 1));
     b1.fireAt(new Coordinate(2, 0));
     b1.fireAt(new Coordinate(1, 0));
-    return view;
+    assertFalse(player.isLose());
+    return player;
   }
 
 }
