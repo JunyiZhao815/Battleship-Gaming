@@ -116,4 +116,49 @@ public class TextPlayer {
 
   }
 
+  /**
+   * This function display this player's perspective of two boards, one is his own
+   * board, another one is enemy's board that the player has hit
+   * 
+   * @param: enemyView:   enemy's boardTextView,
+   * @param: myHeader:    my header,
+   * @param: enemyHeader: enemy's header
+   * @return: it returns a String that display two boards on the same level.
+   */
+  public String displayMyBoardWithEnemyNextToIt(BoardTextView enemyView, String myHeader, String enemyHeader) {
+
+    String myOwnBoard = this.view.displayMyOwnBoard();
+    String enemysBoard = enemyView.displayEnemyBoard();
+    int w = this.theBoard.getWidth();
+    String header = "     " + myHeader;
+
+    int len = header.length();
+    for (int i = 0; i < 2 * w + 22 - len; i++) {
+      header += " ";
+    }
+
+    header += enemyHeader + "\n";
+    String bodyBlank = "";
+    for (int i = 0; i < 16; i++) {
+      bodyBlank += " ";
+    }
+
+    String body = "";
+    String[] myBoardArray = myOwnBoard.split("\n");
+    String[] enemyBoardArray = enemysBoard.split("\n");
+    int myLen = myBoardArray.length;
+    for (int i = 0; i < myLen; i++) {
+      if (i == 0 || i == myLen - 1) {
+        String currRow = myBoardArray[i] + bodyBlank + "  " + enemyBoardArray[i] + "\n";
+        body += currRow;
+        continue;
+      }
+      String currRow = myBoardArray[i] + bodyBlank + enemyBoardArray[i] + "\n";
+      body += currRow;
+    }
+    String line = "--------------------------------------------------------------------------------\n";
+    return line + "Player " + this.name + "'s turn:\n" + header + body + line;
+
+  }
+
 }

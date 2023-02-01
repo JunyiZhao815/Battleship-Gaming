@@ -2,6 +2,7 @@ package edu.duke.jz423.battleship;
 
 import java.util.ArrayList;
 import java.util.function.Function;
+
 /**
  * This class handles textual display of
  * a Board (i.e., converting it to a string to show
@@ -31,10 +32,11 @@ public class BoardTextView {
   }
 
   /**
-     A protected function that display the board for both self and enemy
-     @param: a function
+   * A protected function that display the board for both self and enemy
+   * 
+   * @param: a function
    */
-  protected String displayAnyBoard(Function<Coordinate, Character> getSquareFn){
+  protected String displayAnyBoard(Function<Coordinate, Character> getSquareFn) {
 
     String header = makeHeader();
     StringBuilder ans = new StringBuilder(header);
@@ -77,25 +79,25 @@ public class BoardTextView {
     ans.append("\n");
     return ans.toString();
   }
-  
-    /**
+
+  /**
    * This returns a string that displays the blank broad
    * 
    * @return a string that displays my own broad, with head on the top and
    *         bottom
    */
   public String displayMyOwnBoard() {
-    return displayAnyBoard((c)->toDisplay.whatIsAtForSelf(c));
+    return displayAnyBoard((c) -> toDisplay.whatIsAtForSelf(c));
   }
-  
-    /**
+
+  /**
    * This returns a string that displays the blank broad
    * 
-   * @return a string that displays enemy's  broad, with head on the top and
+   * @return a string that displays enemy's broad, with head on the top and
    *         bottom
    */
   public String displayEnemyBoard() {
-    return displayAnyBoard((c)->toDisplay.whatIsAtForEnemy(c));
+    return displayAnyBoard((c) -> toDisplay.whatIsAtForEnemy(c));
   }
 
 }
