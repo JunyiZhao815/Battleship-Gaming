@@ -5,7 +5,6 @@ public class Coordinate {
   private final int column;
 
 
-
   /**
      This constructor receive a string, whose length is 2, the first char is for the row, the second one is for the column
      @param descr: the string

@@ -47,11 +47,18 @@ public class TextPlayer {
     this.out.println("--------------------------------------------------------------------------------");
     this.out.println(prompt);
     this.out.println("--------------------------------------------------------------------------------");
-    String s = this.inputReader.readLine();
-    if (s == null) {
-      throw new EOFException("Cannot read your placement string, which shows null");
+    Placement p = null;
+    while (true) {
+      try {
+        String s = this.inputReader.readLine();
+        p = new Placement(s);
+      } catch (IllegalArgumentException e) {
+        this.out.println("Please enter a correct placement!");
+        continue;
+      }
+      break;
     }
-    return new Placement(s);
+    return p;
 
   }
 
@@ -170,27 +177,6 @@ public class TextPlayer {
   }
 
   /**
-   * It is a function that reads coordinate from the input String on system.
-   * 
-   * @param prompt: Words that asks user to input string.
-   * @return return a coordinate
-   */
-  public Coordinate readCoordinate(String prompt) throws IOException {
-    if (prompt == null) {
-      throw new IllegalArgumentException("You are sending a null in the readCoordinate process in TextPlayer");
-    }
-    this.out.println("--------------------------------------------------------------------------------");
-    this.out.println(prompt);
-    this.out.println("--------------------------------------------------------------------------------");
-    String s = this.inputReader.readLine();
-    if (s == null) {
-      throw new EOFException("Cannot read your placement string, which shows null");
-    }
-    return new Coordinate(s);
-
-  }
-
-  /**
    * This function taks enemyBoard, enemyView, and the name of enemy, do a turn
    * for self.
    * 
@@ -200,9 +186,23 @@ public class TextPlayer {
    */
 
   public void playOneTurn(Board<Character> enemyBoard, BoardTextView enemyView, String name) throws IOException {
+    this.out.println("--------------------------------------------------------------------------------");
+    this.out.println("Where do you want to fire at? please enter a String e.g. 'A0', A is row, 0 is column");
+    this.out.println("--------------------------------------------------------------------------------");
+
     this.out.print(this.displayMyBoardWithEnemyNextToIt(enemyView, "Your Ocean", "Player " + name + "'s ocean"));
-    Coordinate c = readCoordinate(
-        "Where do you want to fire at? please enter a String e.g. 'A0', A is row, 0 is column\n");
+    Coordinate c;
+    while (true) {
+      try {
+        String str = this.inputReader.readLine();
+        c = new Coordinate(str);
+      } catch (IllegalArgumentException e) {
+        this.out.println("Please enter a correct Coordinate!");
+
+        continue;
+      }
+      break;
+    }
     Ship<Character> fireTheTarget = enemyBoard.fireAt(c);
     if (fireTheTarget == null) {
       this.out.println("You missed");
