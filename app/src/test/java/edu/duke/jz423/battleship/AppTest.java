@@ -19,31 +19,39 @@ import org.junit.jupiter.api.parallel.ResourceLock;
 import org.junit.jupiter.api.parallel.Resources;
 
 class AppTest {
+
   // @Disabled
   @Test
   @ResourceLock(value = Resources.SYSTEM_OUT, mode = ResourceAccessMode.READ_WRITE)
   void test_main() throws IOException {
-    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-    PrintStream out = new PrintStream(bytes, true);
-    InputStream input = getClass().getClassLoader().getResourceAsStream("input.txt");
-    assertNotNull(input);
-    InputStream expectedStream = getClass().getClassLoader().getResourceAsStream("output.txt");
-    assertNotNull(expectedStream);
+    // input is pvp person vs person           ->A
+    // input1 is cvp person vs computer     ->B
+    // input2 is pvc computer vs person     ->C
+    // input3 is cvc computer vs computer ->D
 
-    InputStream oldIn = System.in;
-    PrintStream oldOut = System.out;
-    try {
-      System.setIn(input);
-      System.setOut(out);
-      App.main(new String[0]);
-    } finally {
-      System.setIn(oldIn);
-      System.setOut(oldOut);
+    String[] input_arr = new String[] { "input.txt", "input1.txt", "input2.txt", "input3.txt" };
+    String[] output_arr = new String[] { "output.txt", "output1.txt", "output2.txt", "output3.txt" };
+    for (int i = 0; i < 4; i++) {
+      ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+      PrintStream out = new PrintStream(bytes, true);
+      InputStream input = getClass().getClassLoader().getResourceAsStream(input_arr[i]);
+      assertNotNull(input);
+      InputStream expectedStream = getClass().getClassLoader().getResourceAsStream(output_arr[i]);
+      assertNotNull(expectedStream);
+
+      InputStream oldIn = System.in;
+      PrintStream oldOut = System.out;
+      try {
+        System.setIn(input);
+        System.setOut(out);
+        App.main(new String[0]);
+      } finally {
+        System.setIn(oldIn);
+        System.setOut(oldOut);
+      }
+      String expected = new String(expectedStream.readAllBytes());
+      String actual = bytes.toString();
+      assertEquals(expected, actual);
     }
-    String expected = new String(expectedStream.readAllBytes());
-    String actual = bytes.toString();
-    assertEquals(expected, actual);
-
   }
-
 }

@@ -8,6 +8,16 @@ public class InBoundsRuleChecker<T> extends PlacementRuleChecker<T> {
     super(next);
   }
 
+  /**
+   * It is the functions that overrides from {@link PlacementRuleChecker}, used
+   * for check its own rule: if the ship is out
+   * of bound
+   * 
+   * @param:theShip: the ship that is to be checked
+   * @param: theBoard: the board that the ship may be located
+   * @return: null if there is no error placing, otherwise returns the string that
+   *          describes the error
+   */
   @Override
   protected String checkMyRule(Ship<T> theShip, Board<T> theBoard) {
     Iterable<Coordinate> set = theShip.getCoordinates();

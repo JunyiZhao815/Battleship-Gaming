@@ -1,0 +1,323 @@
+Please choose the following four game combination:
+A: human vs human
+B: human vs computer
+C: computer vs human
+D: computer vs computer
+
+Please enter a valid choice: A, B, C, D
+Please enter a valid choice: A, B, C, D
+Please enter a valid choice: A, B, C, D
+Player A hits a Submarine at A0 !
+Player B hits a Submarine at A0 !
+Player A hits a Submarine at A1 !
+Player B hits a Submarine at A1 !
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hits a Battleship at A5 !
+Player B hits a Battleship at A5 !
+Player A hits a Battleship at A6 !
+Player B hits a Battleship at A6 !
+Player A hits a Battleship at A7 !
+Player B hits a Battleship at A7 !
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hits a Submarine at B0 !
+Player B hits a Submarine at B0 !
+Player A hits a Submarine at B1 !
+Player B hits a Submarine at B1 !
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hits a Battleship at B6 !
+Player B hits a Battleship at B6 !
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hits a Destroyer at C0 !
+Player B hits a Destroyer at C0 !
+Player A hits a Destroyer at C1 !
+Player B hits a Destroyer at C1 !
+Player A hits a Destroyer at C2 !
+Player B hits a Destroyer at C2 !
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hits a Battleship at C5 !
+Player B hits a Battleship at C5 !
+Player A hits a Battleship at C6 !
+Player B hits a Battleship at C6 !
+Player A hits a Battleship at C7 !
+Player B hits a Battleship at C7 !
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hits a Destroyer at D0 !
+Player B hits a Destroyer at D0 !
+Player A hits a Destroyer at D1 !
+Player B hits a Destroyer at D1 !
+Player A hits a Destroyer at D2 !
+Player B hits a Destroyer at D2 !
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hits a Battleship at D6 !
+Player B hits a Battleship at D6 !
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hits a Destroyer at E0 !
+Player B hits a Destroyer at E0 !
+Player A hits a Destroyer at E1 !
+Player B hits a Destroyer at E1 !
+Player A hits a Destroyer at E2 !
+Player B hits a Destroyer at E2 !
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hits a Battleship at E5 !
+Player B hits a Battleship at E5 !
+Player A hits a Battleship at E6 !
+Player B hits a Battleship at E6 !
+Player A hits a Battleship at E7 !
+Player B hits a Battleship at E7 !
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hits a Battleship at F6 !
+Player B hits a Battleship at F6 !
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hits a Carrier at H4 !
+Player B hits a Carrier at H4 !
+Player A hits a Carrier at H5 !
+Player B hits a Carrier at H5 !
+Player A hits a Carrier at H6 !
+Player B hits a Carrier at H6 !
+Player A hits a Carrier at H7 !
+Player B hits a Carrier at H7 !
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hits a Carrier at I3 !
+Player B hits a Carrier at I3 !
+Player A hits a Carrier at I4 !
+Player B hits a Carrier at I4 !
+Player A hits a Carrier at I5 !
+Player B hits a Carrier at I5 !
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hits a Carrier at O5 !
+Player B hits a Carrier at O5 !
+Player A hits a Carrier at O6 !
+Player B hits a Carrier at O6 !
+Player A hits a Carrier at O7 !
+Player B hits a Carrier at O7 !
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hits a Carrier at P3 !
+Player B hits a Carrier at P3 !
+Player A hits a Carrier at P4 !
+Player B hits a Carrier at P4 !
+Player A hits a Carrier at P5 !
+Player B hits a Carrier at P5 !
+Player A hits a Carrier at P6 !
+Player A wins the game !

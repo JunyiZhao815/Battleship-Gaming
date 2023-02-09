@@ -1,6 +1,7 @@
 package edu.duke.jz423.battleship;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class BattleShipBoard<T> implements Board<T> {
@@ -10,6 +11,7 @@ public class BattleShipBoard<T> implements Board<T> {
   private final PlacementRuleChecker<T> placementChecker;
   HashSet<Coordinate> enemyMisses;
   final T missInfo;
+  HashMap<Coordinate, T> enemyGotHit;
 
   /**
    * Constructs a BattleShipBoard with the specified width
@@ -36,6 +38,7 @@ public class BattleShipBoard<T> implements Board<T> {
     // InBoundsRuleChecker<T>(null))
     this.enemyMisses = new HashSet<>();
     this.missInfo = missInfo;
+    this.enemyGotHit = new HashMap<>();
   }
 
   public int getHeight() {
@@ -81,9 +84,11 @@ public class BattleShipBoard<T> implements Board<T> {
   protected T whatIsAt(Coordinate where, boolean isSelf) {
     for (Ship<T> s : myShips) {
       if (s.occupiesCoordinates(where)) {
-        // if (!isSelf && s.wasHitAt(where)) {
-        // return null;
-        // }
+        if (!isSelf) {
+          if (s.wasHitAt(where) && !enemyGotHit.containsKey(where)) {
+            return null;
+          }
+        }
         return s.getDisplayInfoAt(where, isSelf);
       }
     }
@@ -106,15 +111,17 @@ public class BattleShipBoard<T> implements Board<T> {
   @Override
   public Ship<T> fireAt(Coordinate c) {
     for (Ship<T> ship : myShips) {
-      if (ship.isSunk() && ship.occupiesCoordinates(c)) {
-        return ship;
-      }
       if (ship.occupiesCoordinates(c)) {
         ship.recordHitAt(c);
+        enemyGotHit.put(c, ship.getDisplayInfoAt(c, false));
+        if (enemyMisses.contains(c)) {
+          enemyMisses.remove(c);
+        }
         return ship;
       }
     }
     enemyMisses.add(c);
+    enemyGotHit.remove(c);
     return null;
   }
 
@@ -129,21 +136,52 @@ public class BattleShipBoard<T> implements Board<T> {
     if (enemyMisses.contains(where)) {
       return missInfo;
     }
+    if (enemyGotHit.containsKey(where)) {
+      return enemyGotHit.get(where);
+    }
 
     return whatIsAt(where, false);
   }
-  
+
   /**
-     This function checks if all ships in myShips are all sunk
-     @return: it returns true if all ships are sunk, else return false;
+   * This function checks if all ships in myShips are all sunk
+   * 
+   * @return: it returns true if all ships are sunk, else return false;
    */
   @Override
-  public boolean isAllSunk(){
-    for(Ship<T> ship: myShips){
-      if(!ship.isSunk()){
+  public boolean isAllSunk() {
+    for (Ship<T> ship : myShips) {
+      if (!ship.isSunk()) {
         return false;
       }
     }
     return true;
+  }
+
+  /**
+   * getShip function serves useMove() in TextPlayer class, we use the function
+   * here because we cannot deliver the field: myShips to other class.
+   * 
+   * @param: Coordinate c, the coordinate where the ships has
+   * @return the required ship
+   */
+  @Override
+  public Ship<T> getShip(Coordinate c) {
+    for (Ship<T> s : this.myShips) {
+      if (s.occupiesCoordinates(c)) {
+        return s;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * This functions removes the ship from myShips.
+   * 
+   * @param: the ship that I am going to remove
+   */
+  @Override
+  public void removeShip(Ship<T> s) {
+    myShips.remove(s);
   }
 }

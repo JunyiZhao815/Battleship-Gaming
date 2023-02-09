@@ -34,11 +34,16 @@ public class V1ShipFactoryTest {
     Placement p2 = new Placement(c2, 'V');
     shipFactory.makeDestroyer(p2);
     Coordinate c3 = new Coordinate(3, 3);
-    Placement p3 = new Placement(c3, 'V');
+    Placement p3 = new Placement(c3, 'U');
     shipFactory.makeBattleship(p3);
     Coordinate c4 = new Coordinate(4, 4);
-    Placement p4 = new Placement(c4, 'V');
+    Placement p4 = new Placement(c4, 'D');
     shipFactory.makeCarrier(p4);
+    Coordinate c5 = new Coordinate(4, 4);
+    Placement p5 = new Placement(c5, 'V');
+    assertThrows(IllegalArgumentException.class, () -> shipFactory.makeCarrier(p5));
+    Coordinate c6 = new Coordinate(4, 4);
+    Placement p6 = new Placement(c6, 'V');
+    assertThrows(IllegalArgumentException.class, () -> shipFactory.makeBattleship(p6));
   }
-
 }

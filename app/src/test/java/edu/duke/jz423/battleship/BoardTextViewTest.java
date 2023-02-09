@@ -95,7 +95,7 @@ public class BoardTextViewTest {
   @Test
   public void test_display_enemy_3by5_withShips(){ 
     V1ShipFactory factory = new V1ShipFactory();
-    Ship<Character> ship1 = factory.makeBattleship(new Placement("A1V"));
+    Ship<Character> ship1 = factory.makeDestroyer(new Placement("A1V"));
     Ship<Character> ship2 = factory.makeSubmarine(new Placement("A0V"));
     // BasicShip bs = new BasicShip(c);
     Board<Character> b1 = new BattleShipBoard<Character>(3, 5, 'X');
@@ -108,7 +108,7 @@ public class BoardTextViewTest {
     String expectedHeader = "  0|1|2\n";
     String body = "A  | |  A\n" +
         "B s| |  B\n" +
-        "C  |b|  C\n" +
+        "C  |d|  C\n" +
         "D X| |  D\n" +
         "E  | |  E\n";
     String expected = expectedHeader + body + expectedHeader;

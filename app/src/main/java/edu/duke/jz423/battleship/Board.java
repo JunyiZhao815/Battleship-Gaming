@@ -14,4 +14,10 @@ public interface Board<T> {
   public T whatIsAtForEnemy(Coordinate where);
 
   public boolean isAllSunk();
+
+  public Ship<T> getShip(Coordinate c);
+
+  public void removeShip(Ship<T> s);
+
+
 }

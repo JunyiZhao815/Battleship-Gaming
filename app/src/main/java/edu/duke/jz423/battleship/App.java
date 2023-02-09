@@ -7,7 +7,7 @@ package edu.duke.jz423.battleship;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
+
 
 public class App {
   TextPlayer player1;
@@ -48,14 +48,39 @@ public class App {
     // Board<Character> b = new BattleShipBoard<>(10, 20);
     // App app = new App(b, new InputStreamReader(System.in), System.out);
     // app.doOnePlacement();
-
     Board<Character> b1 = new BattleShipBoard<Character>(10, 20, 'X');
     Board<Character> b2 = new BattleShipBoard<Character>(10, 20, 'X');
     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-
     V1ShipFactory factory = new V1ShipFactory();
-    TextPlayer p1 = new TextPlayer("AAA", b1, input, System.out, factory);
-    TextPlayer p2 = new TextPlayer("BBB", b2, input, System.out, factory);
+
+    System.out.println("Please choose the following four game combination:\n" +
+        "A: human vs human\n" +
+        "B: human vs computer\n" +
+        "C: computer vs human\n" +
+        "D: computer vs computer\n");
+    TextPlayer p1 = null, p2 = null;
+    String input_String = input.readLine();
+    while (!(input_String.toUpperCase().equals("A") || input_String.toUpperCase().equals("B")
+        || input_String.toUpperCase().equals("C") || input_String.toUpperCase().equals("D"))) {
+      System.out.println("Please enter a valid choice: A, B, C, D");
+       input_String = input.readLine();
+    }
+
+    input_String = input_String.toUpperCase();
+    if (input_String.equals("A")) {
+      p1 = new TextPlayer("A", b1, input, System.out, factory, false);
+      p2 = new TextPlayer("B", b2, input, System.out, factory, false);
+    } else if (input_String.equals("B")) {
+      p1 = new TextPlayer("A", b1, input, System.out, factory, false);
+      p2 = new TextPlayer("B", b2, input, System.out, factory, true);
+    } else if (input_String.equals("C")) {
+      p1 = new TextPlayer("A", b1, input, System.out, factory, true);
+      p2 = new TextPlayer("B", b2, input, System.out, factory, false);
+    } else{
+      p1 = new TextPlayer("A", b1, input, System.out, factory, true);
+      p2 = new TextPlayer("B", b2, input, System.out, factory, true);
+    }
+
     App app = new App(p1, p2);
     // app.player1.doOnePlacement();
     app.doPlacementPhase();

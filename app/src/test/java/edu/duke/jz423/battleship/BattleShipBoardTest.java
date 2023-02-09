@@ -108,6 +108,9 @@ public class BattleShipBoardTest {
     assertEquals(null, board.fireAt(new Coordinate(0, 2)));
   }
 
+
+
+  
   @Test
   public void test_whatIsAtForEnemy() {
     Board<Character> board = new BattleShipBoard<>(3, 3, 'X');
@@ -123,6 +126,29 @@ public class BattleShipBoardTest {
     board.fireAt(new Coordinate(0, 0));
     assertEquals('s', board.whatIsAtForEnemy(new Coordinate(0, 0)));
 
+  }
+
+  @Test
+  public void test_moveShip() {
+    Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
+    V1ShipFactory shipFactory = new V1ShipFactory();
+    Ship<Character> ship1 = shipFactory.makeSubmarine(new Placement("A0H"));
+    board.tryAddShip(ship1);
+    assertTrue(board.whatIsAtForSelf(new Coordinate("A0")) == 's');
+    board.removeShip(ship1);
+    assertTrue(board.whatIsAtForSelf(new Coordinate("A0")) == null);
+  }
+
+  @Test
+  public void test_getShip() {
+    Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
+    V1ShipFactory shipFactory = new V1ShipFactory();
+    Ship<Character> ship1 = shipFactory.makeSubmarine(new Placement("A0H"));
+    Ship<Character> ship2 = shipFactory.makeDestroyer(new Placement("E0H"));
+    board.tryAddShip(ship1);
+    board.tryAddShip(ship2);
+    assertTrue(board.getShip(new Coordinate("E0")) == ship2);
+    assertTrue(board.getShip(new Coordinate("F0")) == null);
   }
 
 }

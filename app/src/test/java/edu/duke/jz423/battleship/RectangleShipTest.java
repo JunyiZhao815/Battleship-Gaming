@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOError;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -111,4 +113,5 @@ public class RectangleShipTest {
     assertTrue(set.contains(new Coordinate(2, 1)));
     assertTrue(set.contains(new Coordinate(3, 1)));
   }
+
 }

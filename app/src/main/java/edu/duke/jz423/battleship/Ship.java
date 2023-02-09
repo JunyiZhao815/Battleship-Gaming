@@ -1,5 +1,7 @@
 package edu.duke.jz423.battleship;
 
+import java.util.ArrayList;
+
 /**
  * This interface represents any type of Ship in our Battleship game. It is
  * generic in typename T, which is the type of information the view needs to
@@ -68,4 +70,17 @@ public interface Ship<T> {
    */
   public Iterable<Coordinate> getCoordinates();
 
+  public ArrayList<Coordinate> getCoordinates_inorder(Character o);
+
+  public ArrayList<Coordinate> getCoordinates_inorder_Up();
+
+  public ArrayList<Coordinate> getCoordinates_inorder_Right();
+
+  public ArrayList<Coordinate> getCoordinates_inorder_Down();
+
+  public ArrayList<Coordinate> getCoordinates_inorder_Left();
+
+  public ArrayList<Coordinate> getCoordinates_inorder_H_or_V();
+
+  public void makeNULL();
 }

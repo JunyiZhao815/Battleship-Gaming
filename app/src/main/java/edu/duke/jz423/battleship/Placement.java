@@ -17,14 +17,14 @@ public class Placement {
    */
   public Placement(String str) {
     if (str.length() != 3) {
-      throw new IllegalArgumentException("That placement is invalid: it does not have the correct format.");
+      throw new IllegalArgumentException("The string: " + str +", its placement is invalid: it does not have the correct format.");
     }
     String coordinateLetter = str.substring(0, str.length() - 1);
     this.where = new Coordinate(coordinateLetter);
 
     
     char orientationLetter = Character.toUpperCase(str.charAt(str.length() - 1));
-    if ( !(orientationLetter == 'V' || orientationLetter == 'H')) {
+    if ( !(orientationLetter == 'V' || orientationLetter == 'H' || orientationLetter == 'U' || orientationLetter == 'D' || orientationLetter == 'L' || orientationLetter == 'R') ) {
       throw new IllegalArgumentException("That placement is invalid: it does not have the correct format.");
     }
     this.orientation = orientationLetter;
